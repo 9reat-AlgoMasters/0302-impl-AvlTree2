@@ -33,6 +33,10 @@ public class Node {
         return Math.max(getChildHeight(LEFT), getChildHeight(RIGHT));
     }
     
+    public boolean isBalanced() {
+        return Math.abs(getBalanceFactor()) <= 1;
+    }
+    
     
     @Override
     public String toString() {
