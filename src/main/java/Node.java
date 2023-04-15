@@ -1,4 +1,6 @@
 public class Node {
+    private static final boolean LEFT = true;
+    private static final boolean RIGHT = false;
     int value, height;
     Node left, right;
     Node parent;
@@ -17,6 +19,14 @@ public class Node {
         int rightNodeHeight = right == null ? 0 : right.height;
         System.out.printf("%s ----> left : %d, right : %d\n", this, leftNodeHeight, rightNodeHeight);
         return leftNodeHeight - rightNodeHeight;
+    }
+    
+    int getChildHeight(boolean sideOfChild) {
+        if (sideOfChild == LEFT) {
+            return left==null ? 0 : left.height;
+        } else {
+            return right==null ? 0 : right.height;
+        }
     }
     
     @Override
