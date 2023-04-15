@@ -14,11 +14,8 @@ public class Node {
         right = null;
     }
     
-    int getBalanceFactor() {
-        int leftNodeHeight = left == null ? 0 : left.height;
-        int rightNodeHeight = right == null ? 0 : right.height;
-        System.out.printf("%s ----> left : %d, right : %d\n", this, leftNodeHeight, rightNodeHeight);
-        return leftNodeHeight - rightNodeHeight;
+    int findBalanceFactor() {
+        return getChildHeight(LEFT) - getChildHeight(RIGHT);
     }
     
     public int getChildHeight(boolean sideOfChild) {
@@ -34,7 +31,7 @@ public class Node {
     }
     
     public boolean isBalanced() {
-        return Math.abs(getBalanceFactor()) <= 1;
+        return Math.abs(findBalanceFactor()) <= 1;
     }
     
     

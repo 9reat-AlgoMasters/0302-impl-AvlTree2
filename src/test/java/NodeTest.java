@@ -15,7 +15,7 @@ class NodeTest {
     @DisplayName("왼쪽 오른쪽 모두 자식이 없을 때")
     @Test
     void balanceFactorTest1() {
-        assertThat(root.getBalanceFactor()).isEqualTo(0);
+        assertThat(root.findBalanceFactor()).isEqualTo(0);
     }
     
     @DisplayName("오른쪽 자식없을 때")
@@ -23,7 +23,7 @@ class NodeTest {
     void balanceFactorTest2() {
         root.left = new Node(2);
         root.height = 2;
-        assertThat(root.getBalanceFactor()).isEqualTo(1);
+        assertThat(root.findBalanceFactor()).isEqualTo(1);
     }
     
     @DisplayName("왼쪽 자식없을 때")
@@ -31,7 +31,7 @@ class NodeTest {
     void balanceFactorTest3() {
         root.right = new Node(2);
         root.height = 2;
-        assertThat(root.getBalanceFactor()).isEqualTo(-1);
+        assertThat(root.findBalanceFactor()).isEqualTo(-1);
     }
     
     @DisplayName("자식 최대 높이 구하기")
