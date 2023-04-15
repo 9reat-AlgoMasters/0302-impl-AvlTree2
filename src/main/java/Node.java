@@ -21,13 +21,18 @@ public class Node {
         return leftNodeHeight - rightNodeHeight;
     }
     
-    int getChildHeight(boolean sideOfChild) {
+    public int getChildHeight(boolean sideOfChild) {
         if (sideOfChild == LEFT) {
             return left==null ? 0 : left.height;
         } else {
             return right==null ? 0 : right.height;
         }
     }
+    
+    public int findMaxChildHeight() {
+        return Math.max(getChildHeight(LEFT), getChildHeight(RIGHT));
+    }
+    
     
     @Override
     public String toString() {
