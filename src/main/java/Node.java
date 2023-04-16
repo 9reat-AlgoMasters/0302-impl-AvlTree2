@@ -33,6 +33,18 @@ public class Node {
     public boolean isBalanced() {
         return Math.abs(findBalanceFactor()) <= 1;
     }
+
+    public boolean isChildEmpty() {
+        return left==null && right==null;
+    }
+
+    public boolean hasAllChild() {
+        return left != null && right != null;
+    }
+
+    public boolean hasOneChild() {
+        return !isChildEmpty() && !hasAllChild();
+    }
     
     
     @Override
