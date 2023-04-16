@@ -1,4 +1,5 @@
 import exceptions.CustomDuplicatedElementException;
+import exceptions.CustomNoSuchElementException;
 
 public class AvlTree implements iAvlTree{
     private static final boolean LEFT = true;
@@ -56,7 +57,23 @@ public class AvlTree implements iAvlTree{
     
     @Override
     public boolean contains(int value) {
-        return false;
+        return containsRecur(root, value);
+    }
+
+    private boolean containsRecur(Node node, int value) {
+        if (node == null) {
+            return false;
+        }
+
+        if (node.value == value) {
+            return true;
+        }
+
+        if (value < node.value) {
+            return containsRecur(node.left, value);
+        } else {
+            return containsRecur(node.right, value);
+        }
     }
     
     @Override
@@ -79,7 +96,7 @@ public class AvlTree implements iAvlTree{
      */
     @Override
     public void rotateLeft(Node node) {
-        System.out.printf("Rotate Left ---> %s\n", node);
+//        System.out.printf("Rotate Left ---> %s\n", node);
         Node nextCenter = node.right;
         
         if (nextCenter.left != null) {
@@ -90,7 +107,6 @@ public class AvlTree implements iAvlTree{
         }
         
         if (node.parent != null) {
-            System.out.printf("parent 설정\n");
             if (node.parent.left == node) {
                 node.parent.left = nextCenter;
             } else {
@@ -108,7 +124,7 @@ public class AvlTree implements iAvlTree{
     
     @Override
     public void rotateRight(Node node) {
-        System.out.printf("rotate Right -- > %s\n", node);
+//        System.out.printf("rotate Right -- > %s\n", node);
         Node nextCenter = node.left;
         
         if (nextCenter.right != null) {
@@ -139,7 +155,7 @@ public class AvlTree implements iAvlTree{
      * 만약 갱신이 된다면 부모 또한 갱신합니다.
      */
     private void updateHeightRecur(Node node) {
-        System.out.printf("<UPDATE> node : %s\n", node);
+//        System.out.printf("<UPDATE> node : %s\n", node);
         if (node == null) {
             return;
         }
@@ -148,7 +164,7 @@ public class AvlTree implements iAvlTree{
         
         int originHeight = node.height;
         updateHeight(node);
-        System.out.printf("<UPDATE> 갱신 후 node : %s\n", node);
+//        System.out.printf("<UPDATE> 갱신 후 node : %s\n", node);
         
         if (node == root) {
             return;
@@ -198,5 +214,25 @@ public class AvlTree implements iAvlTree{
         }
         return node.parent;
     }
-    
+
+    // 테스트용 메서드
+    public int findHeightByValue(int value) {
+        if (!contains(value)) {
+            throw new CustomNoSuchElementException(String.format("%d값은 트리에 없습니다.", value));
+        }
+        return findHeightByValueRecur(root, value);
+    }
+
+    private int findHeightByValueRecur(Node node, int value) {
+        if (node.value == value) {
+            return node.height;
+        }
+
+        if (value < node.value) {
+            return findHeightByValueRecur(node.left, value);
+        } else {
+            return findHeightByValueRecur(node.right, value);
+        }
+    }
+
 }
