@@ -35,7 +35,7 @@ public class AvlTree implements iAvlTree{
             if (node.left == null) {
                 node.left = new Node(value);
                 node.left.parent = node;
-                updateHeight(node);
+                updateHeightRecur(node);
             } else {
                 insertRecur(node.left, value);
             }
@@ -43,7 +43,7 @@ public class AvlTree implements iAvlTree{
             if (node.right == null) {
                 node.right = new Node(value);
                 node.right.parent = node;
-                updateHeight(node);
+                updateHeightRecur(node);
             } else {
                 insertRecur(node.right, value);
             }
@@ -73,7 +73,10 @@ public class AvlTree implements iAvlTree{
     public int size() {
         return 0;
     }
-    
+
+    /**
+     * 높이 업데이트는 없이 부모 자식의 연결관계만을 수정합니다.
+     */
     @Override
     public void rotateLeft(Node node) {
         System.out.printf("Rotate Left ---> %s\n", node);
@@ -101,8 +104,6 @@ public class AvlTree implements iAvlTree{
         
         node.parent = nextCenter;
         nextCenter.left = node;
-        
-        updateHeight(node);
     }
     
     @Override
@@ -131,24 +132,22 @@ public class AvlTree implements iAvlTree{
         
         node.parent = nextCenter;
         nextCenter.right = node;
-        
-        updateHeight(node);
     }
     
     /**
      * 현재 노드의 height 를 두 자식 중 큰 높이 + 1 로 갱신합니다.
      * 만약 갱신이 된다면 부모 또한 갱신합니다.
      */
-    private void updateHeight(Node node) {
+    private void updateHeightRecur(Node node) {
         System.out.printf("<UPDATE> node : %s\n", node);
         if (node == null) {
             return;
         }
         
-        makeBalanced(node);
+        node = makeBalanced(node);
         
         int originHeight = node.height;
-        node.height = node.findMaxChildHeight() + 1;
+        updateHeight(node);
         System.out.printf("<UPDATE> 갱신 후 node : %s\n", node);
         
         if (node == root) {
@@ -159,28 +158,45 @@ public class AvlTree implements iAvlTree{
                 || (node.parent.height != node.parent.findMaxChildHeight() + 1);
         
         if (isUpdatable) {
-            updateHeight(node.parent);
+            updateHeightRecur(node.parent);
         }
     }
-    
-    private void makeBalanced(Node node) {
-        if (node.isBalanced()) return;
+
+    private void updateHeight(Node node) {
+        node.height = node.findMaxChildHeight() + 1;
+    }
+
+    // node를 루트로 가지는 서브트리를 균형잡힌 서브트리로 만들어 준다.
+    // 이때 루트가 node에서 node의 자식중 하나로 루트가 바뀌는데 새로 바뀐 루트를 반환한다.
+    private Node makeBalanced(Node node) {
+        if (node.isBalanced()) return node;
         
         if (node.findBalanceFactor() == 2) { // LL, LR
             if (node.left.findBalanceFactor() >= 0) { // LL
                 rotateRight(node);
+
+                updateHeight(node);
             } else { // LR
                 rotateLeft(node.left);
                 rotateRight(node);
+
+                updateHeight(node);
+                updateHeight(node.parent.left);
             }
         } else if (node.findBalanceFactor() == -2) { // RR, RL
             if (node.right.findBalanceFactor() <= 0) { // RR
                 rotateLeft(node);
+
+                updateHeight(node);
             } else { // RL
                 rotateRight(node.right);
                 rotateLeft(node);
+
+                updateHeight(node);
+                updateHeight(node.parent.right);
             }
         }
+        return node.parent;
     }
     
 }
