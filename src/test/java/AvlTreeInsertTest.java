@@ -87,4 +87,16 @@ class AvlTreeInsertTest {
         }
     }
 
+    @DisplayName("insert 시 올바른 size 테스트")
+    @Test
+    void sizeTest() {
+        int[] insertList = {30, 15, 60, 10, 25, 45, 20, 28, 17};
+        tree = new AvlTree(30);
+        for (int i=1; i<insertList.length; i++) {
+            tree.insert(insertList[i]);
+        }
+
+        assertThat(tree.size()).isEqualTo(insertList.length);
+    }
+
 }
