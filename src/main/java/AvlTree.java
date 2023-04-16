@@ -78,7 +78,109 @@ public class AvlTree implements iAvlTree{
     
     @Override
     public void delete(int value) {
-    
+        Node target = findByValue(root, value); // 없으면 CustomDuplicatedElementException 발생
+//        System.out.printf("찾은 target : %d\n", target.value);
+
+        if (target.isChildEmpty()) { // 자식이 없을 때 --> 높이만 갱신
+            if (target == root) {
+                root = null;
+                return;
+            }
+
+            if (target.parent.left == target) {
+                target.parent.left = null;
+            } else {
+                target.parent.right = null;
+            }
+//            System.out.printf("자식이 없을 때 지우고 %s를 업데이트!\n", target.parent);
+            updateHeightRecur(target.parent);
+
+        } else if (target.hasOneChild()) { // 자식이 하나만 있을 때
+            Node next = target.left == null ? target.right : target.left;
+            if (target == root) {
+                root = next;
+                return;
+            }
+
+            next.parent = target.parent;
+            if (target.parent.left == target) {
+                target.parent.left = next;
+            } else {
+                target.parent.right = next;
+            }
+            updateHeightRecur(target.parent);
+
+        } else { // 자식이 둘일 때
+            Node replaceNode = findReplaceNode(target.left);
+//            System.out.printf("target node : %s\n", target);
+//            System.out.printf("replace node : %s\n", replaceNode);
+            if (target == root) {
+//                System.out.println("root!");
+                root = replaceNode;
+            } else {
+                if (target.parent.left == target) {
+                    target.parent.left = replaceNode;
+                } else {
+                    target.parent.right = replaceNode;
+                }
+            }
+
+            Node updateNode = replaceNode.parent;
+            if (replaceNode.left != null) {
+                if (replaceNode == target.left) {
+                    replaceNode.parent.left = replaceNode.left;
+                    updateNode = replaceNode;
+                } else {
+                    replaceNode.parent.right = replaceNode.left;
+                }
+            } else {
+                if (replaceNode == target.left) {
+                    replaceNode.parent.left = null;
+                    updateNode = replaceNode;
+                } else {
+                    replaceNode.parent.right = null;
+                }
+            }
+
+            replaceNode.parent = target == root ? null : target.parent;
+
+            replaceNode.left = target.left;
+            if (target.left != null) {
+                target.left.parent = replaceNode;
+            }
+
+            replaceNode.right = target.right;
+            if (target.right != null) {
+                target.right.parent = replaceNode;
+            }
+
+            updateHeightRecur(updateNode);
+        }
+
+        size--;
+    }
+
+    private Node findReplaceNode(Node node) {
+        while (node.right != null) {
+            node = node.right;
+        }
+        return node;
+    }
+
+    private Node findByValue(Node node, int value) {
+        if (node == null) {
+            throw new CustomDuplicatedElementException(String.format("%d는 트리에 존재하지 않습니다.", value));
+        }
+
+        if (node.value == value) {
+            return node;
+        }
+
+        if (value < node.value) {
+            return findByValue(node.left, value);
+        } else {
+            return findByValue(node.right, value);
+        }
     }
     
     @Override
@@ -185,14 +287,17 @@ public class AvlTree implements iAvlTree{
     // node를 루트로 가지는 서브트리를 균형잡힌 서브트리로 만들어 준다.
     // 이때 루트가 node에서 node의 자식중 하나로 루트가 바뀌는데 새로 바뀐 루트를 반환한다.
     private Node makeBalanced(Node node) {
+//        System.out.printf("makeBalance in %s\n", node);
         if (node.isBalanced()) return node;
         
         if (node.findBalanceFactor() == 2) { // LL, LR
             if (node.left.findBalanceFactor() >= 0) { // LL
+//                System.out.println("LL!");
                 rotateRight(node);
 
                 updateHeight(node);
             } else { // LR
+//                System.out.println("LR!");
                 rotateLeft(node.left);
                 rotateRight(node);
 
@@ -201,10 +306,12 @@ public class AvlTree implements iAvlTree{
             }
         } else if (node.findBalanceFactor() == -2) { // RR, RL
             if (node.right.findBalanceFactor() <= 0) { // RR
+//                System.out.println("RR!");
                 rotateLeft(node);
 
                 updateHeight(node);
             } else { // RL
+//                System.out.println("RL!");
                 rotateRight(node.right);
                 rotateLeft(node);
 
