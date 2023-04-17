@@ -6,23 +6,23 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AVLTreeRotateTest {
-    static AVLTree tree;
-    static IAVLTree.Node root;
+    static AvlTree tree;
+    static Node root;
     @BeforeEach
     void beforeEach() {
-        tree = new AVLTree();
-        root = new IAVLTree.Node(50);
+        tree = new AvlTree();
+        root = new Node(50);
     }
     @DisplayName("Rotate Test - LL")
     @Test
     void rotateLeft1() {
-        IAVLTree.Node node1 = new IAVLTree.Node(15);
+        Node node1 = new Node(15);
         node1.parent = root;
         root.leftChild = node1;
-        IAVLTree.Node node2 = new IAVLTree.Node(10);
+        Node node2 = new Node(10);
         node2.parent = node1;
         node1.leftChild = node2;
-        IAVLTree.Node node3 = new IAVLTree.Node(5);
+        Node node3 = new Node(5);
         node3.parent = node2;
         node2.leftChild = node3;
 
@@ -41,13 +41,13 @@ class AVLTreeRotateTest {
     @DisplayName("Rotate Test - LR")
     @Test
     void rotateLeft2() {
-        IAVLTree.Node node1 = new IAVLTree.Node(15);
+        Node node1 = new Node(15);
         node1.parent = root;
         root.leftChild = node1;
-        IAVLTree.Node node2 = new IAVLTree.Node(5);
+        Node node2 = new Node(5);
         node2.parent = node1;
         node1.leftChild = node2;
-        IAVLTree.Node node3 = new IAVLTree.Node(10);
+        Node node3 = new Node(10);
         node3.parent = node2;
         node2.rightChild = node3;
 
@@ -67,13 +67,13 @@ class AVLTreeRotateTest {
     @DisplayName("Rotate Test - RR")
     @Test
     void rotateRight1() {
-        IAVLTree.Node node1 = new IAVLTree.Node(70);
+        Node node1 = new Node(70);
         node1.parent = root;
         root.rightChild = node1;
-        IAVLTree.Node node2 = new IAVLTree.Node(80);
+        Node node2 = new Node(80);
         node2.parent = node1;
         node1.rightChild = node2;
-        IAVLTree.Node node3 = new IAVLTree.Node(90);
+        Node node3 = new Node(90);
         node3.parent = node2;
         node2.rightChild = node3;
 
@@ -92,13 +92,13 @@ class AVLTreeRotateTest {
     @DisplayName("Rotate Test - RL")
     @Test
     void rotateRight2() {
-        IAVLTree.Node node1 = new IAVLTree.Node(70);
+        Node node1 = new Node(70);
         node1.parent = root;
         root.rightChild = node1;
-        IAVLTree.Node node2 = new IAVLTree.Node(90);
+        Node node2 = new Node(90);
         node2.parent = node1;
         node1.rightChild = node2;
-        IAVLTree.Node node3 = new IAVLTree.Node(80);
+        Node node3 = new Node(80);
         node3.parent = node2;
         node2.leftChild = node3;
 
@@ -114,6 +114,5 @@ class AVLTreeRotateTest {
         assertThat(node1.parent).isEqualTo(node3);
         assertThat(root.rightChild).isEqualTo(node3);
     }
-
 
 }
