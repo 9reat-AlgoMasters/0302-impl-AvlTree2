@@ -5,10 +5,10 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.assertj.core.api.Assertions.*;
 class AVLTreeInsertTest {
-    static AVLTree tree;
+    static AvlTree tree;
     @BeforeEach
     void beforeEach() {
-        tree = new AVLTree();
+        tree = new AvlTree();
     }
 
     @DisplayName("Insert Test - size and height")
