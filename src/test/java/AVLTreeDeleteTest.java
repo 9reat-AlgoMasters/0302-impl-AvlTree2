@@ -6,10 +6,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AVLTreeDeleteTest {
-    static AVLTree tree;
+    static AvlTree tree;
     @BeforeEach
     void beforeEach() {
-        tree = new AVLTree();
+        tree = new AvlTree();
     }
 
     @DisplayName("Delete Test - size and height")
