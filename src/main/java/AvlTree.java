@@ -1,28 +1,44 @@
+import exceptions.CustomDuplicatedElementException;
+import exceptions.CustomNoSuchElementException;
+
 public class AvlTree implements iAvlTree{
-    private Node root;
-    private int size;
+    public Node root;
+    public int size;
+
+    public AvlTree() {
+        this.root = null;
+        this.size = 0;
+    }
 
     @Override
     public void insert(int value) {
+        if(contains(value)) {
+            throw new CustomDuplicatedElementException();
+        }
         root = insertRecur(root, value);
+        root.height = Math.max(getHeight(root.right), getHeight(root.left)) + 1;
         size++;
     }
 
     public Node insertRecur(Node node, int value){
         if (node == null) {
-            return new Node(value);
+            return new Node(value, 1);
         }
         if (value < node.value) {
             node.left = insertRecur(node.left, value);
+            node.left.height = Math.max(getHeight(node.left.left), getHeight(node.left.right)) + 1;
         } else if (value > node.value) {
             node.right = insertRecur(node.right, value);
+            node.right.height = Math.max(getHeight(node.right.left), getHeight(node.right.right)) + 1;
         }
+        node.height = Math.max(getHeight(node.left), getHeight(node.right)) + 1;
+
 
         return checkAndRotateByCase(node, value);
     }
 
     public int getHeight(Node node) {
-        return node == null ? -1 : node.height;
+        return node == null ? 0 : node.height;
     }
 
 
@@ -41,6 +57,7 @@ public class AvlTree implements iAvlTree{
     }
 
     public Node checkAndRotateByCase(Node n, int val) {
+
         int bf = balanceFactor(n); // 왼  - 오
 
         // LL
@@ -65,7 +82,38 @@ public class AvlTree implements iAvlTree{
             return rightRotate(n);
         }
 
-        System.out.println("----");
+        return n;
+    }
+
+    public Node checkAndRotateByCase2(Node n) {
+        int bf = balanceFactor(n); // 왼  - 오
+
+        // LL
+        if(bf > 1 && balanceFactor(n.left)>=0) {
+            System.out.println("LL");
+            return rightRotate(n);
+        }
+
+        // RR
+        if (bf < -1 && balanceFactor(n.right)<=0) {
+            System.out.println("RR");
+            return leftRotate(n);
+        }
+
+        // RL
+        if(bf < -1 && balanceFactor(n.right)>0) {
+            System.out.println("RL");
+            n.right = rightRotate(n.right);
+            return leftRotate(n);
+        }
+
+        // LR
+        if(bf > 1 && balanceFactor(n.left)<0) {
+            System.out.println("LR");
+            n.left = leftRotate(n.left);
+            return rightRotate(n);
+        }
+
         return n;
     }
     
@@ -87,10 +135,20 @@ public class AvlTree implements iAvlTree{
     
     @Override
     public void delete(int value) {
-        deleteRecur(root, value);
+        if(!contains(value)) {
+            throw new CustomNoSuchElementException();
+        }
+        root = deleteRecur(root, value);
+        System.out.println("삭제된 값: " + value);
+//        System.out.println(root.value);
+        System.out.println();
+        inOrder(root);
+        System.out.println();
+        size--;
     }
 
     public Node deleteRecur(Node n, int val) {
+        Node temp = null;
         if (n == null) {
             return null;
         }
@@ -101,8 +159,9 @@ public class AvlTree implements iAvlTree{
             n.right = deleteRecur(n.right, val);
         } else {
             // 자식 0개 또는 1개
+
             if ((n.left == null) || (n.right == null)) {
-                Node temp = null;
+
                 int count = 0;
                 if (n.left != null) {
                     temp = n.left;
@@ -113,12 +172,13 @@ public class AvlTree implements iAvlTree{
                     count++;
                 }
 
+
                 // 자식 0개
                 if (count == 0) {
                     System.out.println("자식이 없습니다.");
                     temp = n;
                     n = null; //없앰
-                    size--;
+                    // size--;
                 }
 
                 // 자식 1개
@@ -127,10 +187,17 @@ public class AvlTree implements iAvlTree{
                     if (temp == n.right) {
                         System.out.println("오른쪽 자식만 있습니다.");
                     } else {
+                        if(n.value == 48){
+                            System.out.println(temp.value);
+//                    System.out.println(n.right.value);
+//                            System.out.println(root.value);
+                            System.out.println("!!!! " + count);
+                        }
                         System.out.println("왼쪽 자식만 있습니다.");
                     }
                     n = temp; // temp 에는 이미 왼쪽 or 오른쪽 노드를 들고있고 재귀 올라가면서 부모와 연결된다
-                    size--;
+
+                    // size--;
 
                 }
 
@@ -138,7 +205,7 @@ public class AvlTree implements iAvlTree{
                 // 자식 2개다  있을때
                 // 삭제할 노드가 currentNode
                 System.out.println("자식이 2개 있습니다.");
-                Node temp = n.right;
+                temp = n.right;
                 Node tempParent = null;
 
                 // 삭제할 노드의 오른쪽 자식을 봤을때
@@ -154,23 +221,34 @@ public class AvlTree implements iAvlTree{
                 // 그 노드의 오른쪽 노드가 있는 경우
                 // 바로 위의 부모에 연결 해줌
                 // => 재귀로 해결
-                deleteRecur(n.right, temp.value);
-                size--;
+
+                n.right = deleteRecur(n.right, temp.value);
+                // size--;
             }
 
         }
+        
+        // 한개
+        if(n==null) {
+            return n;
+        }
 
-        return checkAndRotateByCase(n, val); // delete재귀 나오면서 확인후 균형이 아니라면 확인후 바꿔줌
+        n.height = Math.max(getHeight(n.left), getHeight(n.right)) + 1;
+
+        return checkAndRotateByCase2(n); // delete재귀 나오면서 확인후 균형이 아니라면 확인후 바꿔줌
     }
     
     @Override
     public boolean isEmpty() {
+        if (size == 0) {
+            return true;
+        }
         return false;
     }
     
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 
     @Override
@@ -188,6 +266,7 @@ public class AvlTree implements iAvlTree{
         if (n == root) {
             root = temp;
         }
+
         n.right = temp.left; // n의 오른쪽 자식의 왼쪽 자식을 n의 오른쪽에 붙이는 과정
         temp.left = n; //  n의 오른쪽 자식의 왼쪽 자식을 n으로 바꿔버림
 
@@ -203,12 +282,27 @@ public class AvlTree implements iAvlTree{
         if (n == root) {
             root = temp;
         }
+
         n.left = temp.right; // n의 왼쪽 자식의 오른쪽 자식을 n의 왼쪽에 붙이는 과정
+
         temp.right = n; //  n의 왼쪽 자식의 오른쪽 자식을 n으로 바꿔버림
 
+
+        // System.out.println("바뀐 n의 높이 확인: " + getHeight(n.left)+ getHeight(n.right));
         n.height = Math.max(getHeight(n.left), getHeight(n.right)) + 1;
-        temp.height = Math.max(getHeight(temp.right), getHeight(temp.right)) + 1;
+        // System.out.println("새롭게 올라온 temp의 높이 확인: " + getHeight(temp.left)+" " + getHeight(temp.right));
+        temp.height = Math.max(getHeight(temp.left), getHeight(temp.right)) + 1;
 
         return temp;
+    }
+
+    public void inOrder(Node n) {
+        if(n == null) {
+            return;
+        }
+        inOrder(n.left);
+        System.out.println(n.value);
+        inOrder(n.right);
+
     }
 }
