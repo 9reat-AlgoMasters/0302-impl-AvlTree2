@@ -1,16 +1,16 @@
 public class Node {
     int value, height;
-    Node leftChild;
-    Node rightChild;
+    Node left;
+    Node right;
     Node parent;
     public Node(int value) {
         this.value = value;
         this.height = 1;
     }
 
-    public Node(int value, Node leftChild, Node rightChild) {
+    public Node(int value, Node left, Node right) {
         this.value = value;
-        this.leftChild = leftChild;
-        this.rightChild = rightChild;
+        this.left = left;
+        this.right = right;
     }
 }
