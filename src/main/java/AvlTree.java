@@ -3,11 +3,11 @@ public class AvlTree implements iAvlTree{
    private Node root;
     private int size;
 
-    public AVLTree() {
+    public AvlTree() {
         root = null;
         size = 0;
     }
-    public AVLTree(Node root) {
+    public AvlTree(Node root) {
         this.root = root;
         size = 1;
     }
@@ -21,23 +21,6 @@ public class AvlTree implements iAvlTree{
         //넣을 자리를 찾을 때까지 반복
         while(node != null){
             //넣을 자리를 찾았을 때 node는 null이므로 그 부모 노드를 기록해놓아야 함
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
             parent = node;
             //넣을 값이 현재 node 값보다 작으면 왼쪽 서브트리로, 크면 오른쪽으로 이동
             if(value < node.value){
@@ -157,7 +140,6 @@ public class AvlTree implements iAvlTree{
 
     public Node find(int value) {
         Node node = root;
-
         while(node != null){
             if(value < node.value){
                 node = node.left;
