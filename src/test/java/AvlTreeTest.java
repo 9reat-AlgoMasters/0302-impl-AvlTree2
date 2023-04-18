@@ -129,9 +129,44 @@ class AvlTreeTest {
         assertThat(rootTestAvlTree.root.value).isEqualTo(20);
     }
 
-    @DisplayName("Right rotate 테스트")
+    @DisplayName("rotate 테스트1")
     @Test
-    void rightTest() {
+    void rotateTest1() {
+        AvlTree rightRotateTestAvlTree = new AvlTree();
+        rightRotateTestAvlTree.insert(5);
+        rightRotateTestAvlTree.insert(3);
+        rightRotateTestAvlTree.insert(10);
+        rightRotateTestAvlTree.insert(15);
+        rightRotateTestAvlTree.insert(22);
+        rightRotateTestAvlTree.insert(1);
+        rightRotateTestAvlTree.insert(-1);
+        assertThat(rightRotateTestAvlTree.root.value).isEqualTo(5);
+        assertThat(rightRotateTestAvlTree.root.left.value).isEqualTo(1);
+        assertThat(rightRotateTestAvlTree.root.right.value).isEqualTo(15);
+        assertThat(rightRotateTestAvlTree.root.left.left.value).isEqualTo(-1);
+        assertThat(rightRotateTestAvlTree.root.left.right.value).isEqualTo(3);
+        assertThat(rightRotateTestAvlTree.root.right.left.value).isEqualTo(10);
+        assertThat(rightRotateTestAvlTree.root.right.right.value).isEqualTo(22);
+    }
 
+    @DisplayName("rotate 테스트2")
+    @Test
+    void rotateTest2() {
+        AvlTree rightRotateTestAvlTree = new AvlTree();
+        rightRotateTestAvlTree.insert(1);
+        rightRotateTestAvlTree.insert(2);
+        rightRotateTestAvlTree.insert(3);
+        assertThat(rightRotateTestAvlTree.root.value).isEqualTo(2);
+        assertThat(rightRotateTestAvlTree.root.left.value).isEqualTo(1);
+        assertThat(rightRotateTestAvlTree.root.right.value).isEqualTo(3);
+        rightRotateTestAvlTree.insert(4);
+        rightRotateTestAvlTree.insert(5);
+        rightRotateTestAvlTree.insert(6);
+        assertThat(rightRotateTestAvlTree.root.value).isEqualTo(4);
+        assertThat(rightRotateTestAvlTree.root.left.value).isEqualTo(2);
+        assertThat(rightRotateTestAvlTree.root.right.value).isEqualTo(5);
+        assertThat(rightRotateTestAvlTree.root.left.left.value).isEqualTo(1);
+        assertThat(rightRotateTestAvlTree.root.left.right.value).isEqualTo(3);
+        assertThat(rightRotateTestAvlTree.root.right.right.value).isEqualTo(6);
     }
 }
