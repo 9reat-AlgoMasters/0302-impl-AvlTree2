@@ -99,7 +99,9 @@
 5. 자식이 모두 있고 delete 이후 rotate 일어날 경우
 6. delete 시 올바른 size 테스트
 
-
+### AvlTreeTest
+1. 이진 탐색 트리에 포함된 노드 test : `contains` -> `true`
+ 2. 이진 탐색 트리에 포함되지 않은 노드 test : `contains` -> `true`
 
 # Implementation 정보
 
