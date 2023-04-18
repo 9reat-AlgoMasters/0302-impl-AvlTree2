@@ -98,7 +98,7 @@ class AvlTreeTest {
         rootTestAvlTree.insert(55);
         assertThat(rootTestAvlTree.root.value).isEqualTo(30);
         rootTestAvlTree.insert(65);
-        assertThat(rootTestAvlTree.root.value).isEqualTo(45);
+        assertThat(rootTestAvlTree.root.value).isEqualTo(30);
     }
 
     @DisplayName("root 테스트2") // 5 10 3 22 20
@@ -114,19 +114,19 @@ class AvlTreeTest {
         rootTestAvlTree.insert(22);
         assertThat(rootTestAvlTree.root.value).isEqualTo(5);
         rootTestAvlTree.insert(20);
-        assertThat(rootTestAvlTree.root.value).isEqualTo(10);
+        assertThat(rootTestAvlTree.root.value).isEqualTo(5);
         rootTestAvlTree.insert(30);
-        assertThat(rootTestAvlTree.root.value).isEqualTo(10);
+        assertThat(rootTestAvlTree.root.value).isEqualTo(20);
         rootTestAvlTree.insert(50);
-        assertThat(rootTestAvlTree.root.value).isEqualTo(10);
+        assertThat(rootTestAvlTree.root.value).isEqualTo(20);
         rootTestAvlTree.insert(60);
-        assertThat(rootTestAvlTree.root.value).isEqualTo(22);
+        assertThat(rootTestAvlTree.root.value).isEqualTo(20);
         rootTestAvlTree.insert(67);
-        assertThat(rootTestAvlTree.root.value).isEqualTo(22);
+        assertThat(rootTestAvlTree.root.value).isEqualTo(20);
         rootTestAvlTree.insert(70);
-        assertThat(rootTestAvlTree.root.value).isEqualTo(30);
+        assertThat(rootTestAvlTree.root.value).isEqualTo(20);
         rootTestAvlTree.insert(80);
-        assertThat(rootTestAvlTree.root.value).isEqualTo(30);
+        assertThat(rootTestAvlTree.root.value).isEqualTo(20);
     }
 
     @DisplayName("Right rotate 테스트")
