@@ -31,13 +31,13 @@ class AVLTreeInsertTest {
     @Test
     void insert2() {
         tree.insert(10);
-        assertThat(tree.find(10).leftChild).isEqualTo(null);
+        assertThat(tree.find(10).left).isEqualTo(null);
         tree.insert(5);
-        assertThat(tree.find(10).leftChild.value).isEqualTo(5);
+        assertThat(tree.find(10).left.value).isEqualTo(5);
         tree.insert(1);
-        assertThat(tree.find(10).leftChild).isEqualTo(null);
-        assertThat(tree.find(5).leftChild.value).isEqualTo(1);
-        assertThat(tree.find(5).rightChild.value).isEqualTo(10);
+        assertThat(tree.find(10).left).isEqualTo(null);
+        assertThat(tree.find(5).left.value).isEqualTo(1);
+        assertThat(tree.find(5).right.value).isEqualTo(10);
 
         assertThat(tree.find(5).height).isEqualTo(2);
         assertThat(tree.find(1).height).isEqualTo(1);
@@ -50,9 +50,9 @@ class AVLTreeInsertTest {
         tree.insert(10);
         tree.insert(5);
         tree.insert(7);
-        assertThat(tree.find(10).leftChild).isEqualTo(null);
-        assertThat(tree.find(7).leftChild.value).isEqualTo(5);
-        assertThat(tree.find(7).rightChild.value).isEqualTo(10);
+        assertThat(tree.find(10).left).isEqualTo(null);
+        assertThat(tree.find(7).left.value).isEqualTo(5);
+        assertThat(tree.find(7).right.value).isEqualTo(10);
 
         assertThat(tree.find(7).height).isEqualTo(2);
         assertThat(tree.find(5).height).isEqualTo(1);
@@ -65,9 +65,9 @@ class AVLTreeInsertTest {
         tree.insert(1);
         tree.insert(5);
         tree.insert(7);
-        assertThat(tree.find(1).rightChild).isEqualTo(null);
-        assertThat(tree.find(5).leftChild.value).isEqualTo(1);
-        assertThat(tree.find(5).rightChild.value).isEqualTo(7);
+        assertThat(tree.find(1).right).isEqualTo(null);
+        assertThat(tree.find(5).left.value).isEqualTo(1);
+        assertThat(tree.find(5).right.value).isEqualTo(7);
 
         assertThat(tree.find(5).height).isEqualTo(2);
         assertThat(tree.find(1).height).isEqualTo(1);
@@ -79,9 +79,9 @@ class AVLTreeInsertTest {
         tree.insert(1);
         tree.insert(5);
         tree.insert(3);
-        assertThat(tree.find(1).rightChild).isEqualTo(null);
-        assertThat(tree.find(3).leftChild.value).isEqualTo(1);
-        assertThat(tree.find(3).rightChild.value).isEqualTo(5);
+        assertThat(tree.find(1).right).isEqualTo(null);
+        assertThat(tree.find(3).left.value).isEqualTo(1);
+        assertThat(tree.find(3).right.value).isEqualTo(5);
 
         assertThat(tree.find(3).height).isEqualTo(2);
         assertThat(tree.find(1).height).isEqualTo(1);
@@ -101,12 +101,12 @@ class AVLTreeInsertTest {
         tree.insert(25);
         tree.insert(50);
         tree.insert(18);
-        assertThat(tree.find(15).leftChild.value).isEqualTo(4);
-        assertThat(tree.find(15).rightChild.value).isEqualTo(25);
-        assertThat(tree.find(25).leftChild.value).isEqualTo(20);
-        assertThat(tree.find(25).rightChild.value).isEqualTo(30);
-        assertThat(tree.find(30).leftChild).isEqualTo(null);
-        assertThat(tree.find(30).rightChild.value).isEqualTo(50);
+        assertThat(tree.find(15).left.value).isEqualTo(4);
+        assertThat(tree.find(15).right.value).isEqualTo(25);
+        assertThat(tree.find(25).left.value).isEqualTo(20);
+        assertThat(tree.find(25).right.value).isEqualTo(30);
+        assertThat(tree.find(30).left).isEqualTo(null);
+        assertThat(tree.find(30).right.value).isEqualTo(50);
 
         assertThat(tree.find(15).height).isEqualTo(4);
         assertThat(tree.find(4).height).isEqualTo(3);
