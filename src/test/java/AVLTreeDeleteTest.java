@@ -39,9 +39,9 @@ class AVLTreeDeleteTest {
 
         tree.delete(30);
 
-        assertThat(tree.find(15).rightChild).isEqualTo(null);
-        assertThat(tree.find(10).leftChild.value).isEqualTo(5);
-        assertThat(tree.find(10).rightChild.value).isEqualTo(15);
+        assertThat(tree.find(15).right).isEqualTo(null);
+        assertThat(tree.find(10).left.value).isEqualTo(5);
+        assertThat(tree.find(10).right.value).isEqualTo(15);
 
         assertThat(tree.find(10).height).isEqualTo(2);
         assertThat(tree.find(5).height).isEqualTo(1);
@@ -49,13 +49,13 @@ class AVLTreeDeleteTest {
 
         tree.delete(15);
 
-        assertThat(tree.find(10).rightChild).isEqualTo(null);
+        assertThat(tree.find(10).right).isEqualTo(null);
         assertThat(tree.find(10).height).isEqualTo(2);
         assertThat(tree.find(5).height).isEqualTo(1);
 
         tree.delete(5);
         assertThat(tree.find(5)).isEqualTo(null);
-        assertThat(tree.find(10).leftChild).isEqualTo(null);
+        assertThat(tree.find(10).left).isEqualTo(null);
         assertThat(tree.find(10).height).isEqualTo(1);
     }
 
@@ -74,18 +74,18 @@ class AVLTreeDeleteTest {
         tree.delete(20);
 
         assertThat(tree.find(20)).isEqualTo(null);
-        assertThat(tree.find(30).leftChild.value).isEqualTo(25);
-        assertThat(tree.find(30).rightChild.value).isEqualTo(40);
+        assertThat(tree.find(30).left.value).isEqualTo(25);
+        assertThat(tree.find(30).right.value).isEqualTo(40);
 
         assertThat(tree.find(30).height).isEqualTo(3);
         assertThat(tree.find(25).height).isEqualTo(1);
 
         tree.delete(10);
 
-        assertThat(tree.find(15).leftChild.value).isEqualTo(5);
-        assertThat(tree.find(15).rightChild.value).isEqualTo(25);
-        assertThat(tree.find(30).leftChild.value).isEqualTo(15);
-        assertThat(tree.find(30).rightChild.value).isEqualTo(40);
+        assertThat(tree.find(15).left.value).isEqualTo(5);
+        assertThat(tree.find(15).right.value).isEqualTo(25);
+        assertThat(tree.find(30).left.value).isEqualTo(15);
+        assertThat(tree.find(30).right.value).isEqualTo(40);
 
         assertThat(tree.find(30).height).isEqualTo(3);
         assertThat(tree.find(15).height).isEqualTo(2);
@@ -125,25 +125,25 @@ class AVLTreeDeleteTest {
 
         tree.delete(5);
 
-        assertThat(tree.find(7).leftChild.value).isEqualTo(3);
-        assertThat(tree.find(7).rightChild.value).isEqualTo(8);
+        assertThat(tree.find(7).left.value).isEqualTo(3);
+        assertThat(tree.find(7).right.value).isEqualTo(8);
 
         assertThat(tree.find(10).height).isEqualTo(3);
         assertThat(tree.find(7).height).isEqualTo(2);
         assertThat(tree.find(3).height).isEqualTo(1);
 
         tree.delete(15);
-        assertThat(tree.find(25).leftChild.value).isEqualTo(10);
-        assertThat(tree.find(25).rightChild.value).isEqualTo(30);
-        assertThat(tree.find(30).leftChild.value).isEqualTo(27);
+        assertThat(tree.find(25).left.value).isEqualTo(10);
+        assertThat(tree.find(25).right.value).isEqualTo(30);
+        assertThat(tree.find(30).left.value).isEqualTo(27);
 
         assertThat(tree.find(25).height).isEqualTo(4);
         assertThat(tree.find(30).height).isEqualTo(2);
 
         tree.delete(25);
-        assertThat(tree.find(27).leftChild.value).isEqualTo(10);
-        assertThat(tree.find(27).rightChild.value).isEqualTo(30);
-        assertThat(tree.find(30).leftChild).isEqualTo(null);
+        assertThat(tree.find(27).left.value).isEqualTo(10);
+        assertThat(tree.find(27).right.value).isEqualTo(30);
+        assertThat(tree.find(30).left).isEqualTo(null);
 
         assertThat(tree.find(27).height).isEqualTo(4);
         assertThat(tree.find(30).height).isEqualTo(2);
@@ -167,19 +167,19 @@ class AVLTreeDeleteTest {
 
         tree.delete(15);
 
-        assertThat(tree.find(25).leftChild.value).isEqualTo(13);
-        assertThat(tree.find(25).rightChild.value).isEqualTo(30);
-        assertThat(tree.find(12).leftChild.value).isEqualTo(10);
-        assertThat(tree.find(12).rightChild.value).isEqualTo(25);
+        assertThat(tree.find(25).left.value).isEqualTo(13);
+        assertThat(tree.find(25).right.value).isEqualTo(30);
+        assertThat(tree.find(12).left.value).isEqualTo(10);
+        assertThat(tree.find(12).right.value).isEqualTo(25);
 
         assertThat(tree.find(12).height).isEqualTo(4);
         assertThat(tree.find(25).height).isEqualTo(3);
 
         tree.delete(13);
         tree.delete(14);
-        assertThat(tree.find(25).leftChild).isEqualTo(null);
-        assertThat(tree.find(25).rightChild.value).isEqualTo(27);
-        assertThat(tree.find(30).leftChild.value).isEqualTo(25);
+        assertThat(tree.find(25).left).isEqualTo(null);
+        assertThat(tree.find(25).right.value).isEqualTo(27);
+        assertThat(tree.find(30).left.value).isEqualTo(25);
 
         assertThat(tree.find(12).height).isEqualTo(4);
         assertThat(tree.find(30).height).isEqualTo(3);
